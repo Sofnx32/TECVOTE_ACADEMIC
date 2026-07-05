@@ -1,0 +1,16 @@
+# Heredar dependencias del proyecto base
+-r base.txt
+
+# Herramientas de Depuración (Debug)
+django-debug-toolbar>=4.2
+
+# Testing & Automatización de Pruebas
+pytest>=7.4
+pytest-django>=4.7
+pytest-cov>=4.1
+factory-boy>=3.3
+
+# Calidad de Código & Formateadores (Linters)
+black>=23.0
+flake8>=6.0
+isort>=5.12

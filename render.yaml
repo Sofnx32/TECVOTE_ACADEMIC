@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: tecvote-api
+    env: python
+    plan: free
+    # Se compila, se recolectan estáticos y se migra la Base de Datos antes de encender
+    buildCommand: pip install -r requirements/prod.txt && python manage.py collectstatic --noinput && python manage.py migrate
+    startCommand: gunicorn tecvote.wsgi:application --bind 0.0.0.0:$PORT
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: tecvote-db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: ".onrender.com,localhost,127.0.0.1"
+      - key: CORS_ALLOWED_ORIGINS_PROD
+        value: "https://tecvote-api.onrender.com" # Cambia esto por la URL final que te dé Render
+
+databases:
+  - name: tecvote-db
+    plan: free
+    databaseName: tecvote_db
+    user: postgres

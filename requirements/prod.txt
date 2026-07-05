@@ -1,0 +1,15 @@
+# 1. Heredar todas las dependencias del archivo base
+-r base.txt
+
+# 2. Servidor de producción para Render (WSGI)
+gunicorn>=21.2
+
+# 3. Conector e integrador para la Base de Datos de Render (DATABASE_URL)
+dj-database-url>=2.1
+
+# 4. Servido y compresión eficiente de archivos estáticos
+whitenoise>=6.6
+
+# 5. Capa de Caché en Producción (Redis)
+redis>=5.0
+django-redis>=5.4
