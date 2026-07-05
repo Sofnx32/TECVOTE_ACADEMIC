@@ -6,7 +6,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 # SECURITY
-SECRET_KEY = config("SECRET_KEY")  # ❌ Sin default, debe fallar si no existe en el .env
+SECRET_KEY = config("SECRET_KEY") 
 DEBUG = False  # Se sobreescribe en dev.py
 
 # HOSTS
@@ -78,7 +78,7 @@ DATABASES = {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": config("DB_NAME", default="tecvote_db"),
         "USER": config("DB_USER", default="postgres"),      
-        "PASSWORD": config("DB_PASSWORD"),                  
+        "PASSWORD": config("DB_PASSWORD", default=""),                 
         "HOST": config("DB_HOST", default="127.0.0.1"),
         "PORT": config("DB_PORT", default="5432"),
     }
