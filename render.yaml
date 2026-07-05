@@ -24,4 +24,4 @@ databases:
   - name: tecvote-db
     plan: free
     databaseName: tecvote_db
-    user: postgres
+    user: tecvote_user
