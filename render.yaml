@@ -12,7 +12,7 @@ services:
           name: tecvote-db
           property: connectionString
       - key: SECRET_KEY
-        generateValue: true
+        value: "ah#na_h3(4x)*g6u_vygk&mv^re@lhs_8og7qtnr#7*gdxv5qf"  
       - key: DEBUG
         value: "False"
       - key: ALLOWED_HOSTS
