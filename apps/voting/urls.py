@@ -8,6 +8,7 @@ router.register(r"voting-sessions", VotingSessionViewSet, basename="voting-sessi
 router.register(r"votes", VoteViewSet, basename="vote")
 router.register(r"vote-selections", VoteSelectionViewSet, basename="vote-selection")
 
+
 urlpatterns = [
     path("public/verify-receipt/<str:receipt_code>/", ReceiptVerificationView.as_view(), name="verify-receipt"),
 ] + router.urls

@@ -28,6 +28,7 @@ urlpatterns = [
     # Autenticación (UNA SOLA VEZ)
     path("api/v1/auth/token/", TokenObtainPairView.as_view(), name="token_obtain_pair"),
     path("api/v1/auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
+    path("api/v1/auth/", include("apps.accounts.urls")),
 
     # Apps de la API (CADA UNA UNA SOLA VEZ)
     path("api/v1/", include("apps.elections.urls")),
@@ -35,6 +36,11 @@ urlpatterns = [
     path("api/v1/", include("apps.voting.urls")),
     path("api/v1/", include("apps.results.urls")),
     path("api/v1/", include("apps.security.urls")),
+
+    #Apps de la API (ORGANIZACIONES)
+    path("api/v1/organizations/", include("apps.organizations.urls")),
+
+
 ]
 
 if settings.DEBUG:

@@ -1,5 +1,6 @@
+# tecvote/settings/prod.py
 from .base import *
-from decouple import config  # ✅ Añadido: Necesario para usar config()
+from decouple import config  
 import dj_database_url
 
 DEBUG = False

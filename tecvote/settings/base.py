@@ -1,3 +1,5 @@
+# tecvote/settings/base.py
+
 from pathlib import Path
 from decouple import config
 import os
@@ -135,7 +137,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 # CORS CONFIGURATION
-CORS_ALLOW_ALL_ORIGINS = False
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = config(
     "CORS_ALLOWED_ORIGINS",
     default="http://localhost:3000,http://127.0.0.1:3000"
