@@ -30,6 +30,8 @@ class Organization(models.Model):
     # CONFIGURACIÓN BÁSICA (AGREGAR AHORA)
     country = models.CharField(max_length=100, default="Perú")
     timezone = models.CharField(max_length=50, default="America/Lima")
+    onboarding_completed = models.BooleanField(default=False)
+    onboarding_completed_at = models.DateTimeField(null=True, blank=True)
 
     def __str__(self):
         return f"{self.name} ({self.code})"

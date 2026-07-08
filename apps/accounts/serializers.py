@@ -64,6 +64,7 @@ class UserSerializer(serializers.ModelSerializer):
     Serializer para mostrar datos del usuario.
     """
     organization = OrganizationSerializer(read_only=True)
+    is_active_display = serializers.SerializerMethodField()
     
     class Meta:
         model = User
@@ -74,9 +75,15 @@ class UserSerializer(serializers.ModelSerializer):
             "role",
             "institutional_id",
             "is_verified",
+            "is_active",  
+            "is_active_display", 
             "organization",
+            "date_joined",
         ]
         read_only_fields = ["id", "email"]
+    
+    def get_is_active_display(self, obj):
+        return "Activo" if obj.is_active else "Inactivo"
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
