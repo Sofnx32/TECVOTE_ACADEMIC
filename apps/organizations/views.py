@@ -331,10 +331,11 @@ class OrganizationUpdateBrandingView(APIView):
                 status=status.HTTP_400_BAD_REQUEST
             )
         
-        # Verificar que es ADMIN de la organización
-        if request.user.role != "ADMIN":
+        # SOLUCIÓN DEFINITIVA AL 403: Normaliza el rol a mayúsculas y quita espacios
+        user_role = getattr(request.user, 'role', '')
+        if str(user_role).upper().strip() != "ADMIN":
             return Response(
-                {"error": "Solo administradores pueden actualizar el branding"},
+                {"error": f"Solo administradores pueden actualizar el branding. Tu rol detectado es: {user_role}"},
                 status=status.HTTP_403_FORBIDDEN
             )
         
@@ -343,7 +344,6 @@ class OrganizationUpdateBrandingView(APIView):
             org.name = request.data['name']
         
         if 'code' in request.data:
-            # Verificar que el código no exista en otra organización
             if Organization.objects.filter(code=request.data['code']).exclude(id=org.id).exists():
                 return Response(
                     {"error": "Este código ya está en uso"},

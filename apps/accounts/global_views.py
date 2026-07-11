@@ -1,10 +1,19 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, BasePermission
 from rest_framework import status
 from django.db.models import Q
 from .models import User
 from .serializers import UserSerializer
+
+
+class IsSuperUser(BasePermission):
+    """
+    Permiso personalizado para asegurar que el usuario 
+    esté autenticado y sea estrictamente un SUPERADMIN.
+    """
+    def has_permission(self, request, view):
+        return bool(request.user and request.user.is_authenticated and request.user.is_superuser)
 
 
 class GlobalUsersListView(APIView):
@@ -12,16 +21,9 @@ class GlobalUsersListView(APIView):
     Lista TODOS los usuarios de TODAS las organizaciones.
     Solo accesible por SUPER ADMIN.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsSuperUser]
     
     def get(self, request):
-        # Verificar que es superadmin
-        if not request.user.is_superuser:
-            return Response(
-                {"error": "No autorizado"},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        
         # Obtener parámetros de filtro
         organization_id = request.query_params.get('organization', None)
         role = request.query_params.get('role', None)
@@ -76,15 +78,9 @@ class GlobalUserDetailView(APIView):
     Ver detalle de un usuario específico.
     Solo accesible por SUPER ADMIN.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsSuperUser]
     
     def get(self, request, user_id):
-        if not request.user.is_superuser:
-            return Response(
-                {"error": "No autorizado"},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        
         try:
             user = User.objects.select_related('organization').get(id=user_id)
             serializer = UserSerializer(user)
@@ -101,15 +97,9 @@ class GlobalUserToggleActiveView(APIView):
     Activar/Desactivar un usuario.
     Solo accesible por SUPER ADMIN.
     """
-    permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated, IsSuperUser]
     
     def post(self, request, user_id):
-        if not request.user.is_superuser:
-            return Response(
-                {"error": "No autorizado"},
-                status=status.HTTP_403_FORBIDDEN
-            )
-        
         try:
             user = User.objects.get(id=user_id)
             

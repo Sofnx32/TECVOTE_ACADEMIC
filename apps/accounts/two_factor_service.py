@@ -3,6 +3,9 @@ import qrcode
 import io
 import base64
 import secrets
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class TwoFactorService:
@@ -38,9 +41,21 @@ class TwoFactorService:
     @staticmethod
     def verify_code(secret, code):
         try:
+            if not secret or not code:
+                return False
+                
+            clean_code = str(code).strip().replace(" ", "")
+            
+            # Si el código se transformó en número en el camino y perdió ceros a la izquierda (ej: "4532" -> "004532")
+            if len(clean_code) < 6:
+                clean_code = clean_code.zfill(6)
+                
             totp = pyotp.TOTP(secret)
-            return totp.verify(code, valid_window=2)
-        except Exception:
+            
+            # Ejecutamos la verificación con la ventana de gracia que ya tenías
+            return totp.verify(clean_code, valid_window=2)
+        except Exception as e:
+            logger.error(f"Error verificado TOTP: {str(e)}")
             return False
     
     @staticmethod
