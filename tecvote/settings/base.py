@@ -177,7 +177,7 @@ LOGGING = {
     },
 }
 
-IMPLE_JWT = {
+SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),  # Token válido por 1 día
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
     "ROTATE_REFRESH_TOKENS": False,

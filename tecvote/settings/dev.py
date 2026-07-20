@@ -9,7 +9,7 @@ ALLOWED_HOSTS = ["localhost", "127.0.0.1", "0.0.0.0"]
 # CORS abierto para desarrollo
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
-
+ROOT_URLCONF = 'tecvote.urls'
 # Permisos relajados en desarrollo
 REST_FRAMEWORK["DEFAULT_PERMISSION_CLASSES"] = [
     "rest_framework.permissions.AllowAny",
